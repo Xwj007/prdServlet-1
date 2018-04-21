@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../static/css/icon.css">
+	<link rel="stylesheet" href="../static/css/easy_index.css">
+    <link rel="shortcut icon" href="../static/images/favicon-32.ico" type="image/x-icon"/>
+	<title></title>
+	<style>
+        #top-logo{float:left;}
+        .brand-logo{min-width:600px;}
+        #logo-text{margin:0.5ex 0 0 40px;color:rgb(50,150,230);float:left;}
+        .log-field{padding-left:4em;padding-right:4em;}
+        .logout{display:none;}
+  
+        /*Left-sidebar*/
+        #left-sidebar{padding:0;max-width:250px;}
+        #left-sidebar .glyphicon-menu-down,#left-sidebar glyphicon-menu-up{font-size:10px;margin:4px 10px 0 0;}
+        .sidebar-menu{list-style: none;margin:0;padding:0;background-color: #222d32;}
+        .sidebar-menu > li {position: relative;margin:0;padding:0;}
+        .sidebar-menu > li > a{padding:12px 5px 12px 15px;display:block;border-left:3px solid transparent;color:#b8c7ce;}
+        .sidebar-menu > li:hover > a, .sidebar-menu > li.active > a{color:#fff;background: #1e282c;border-left-color: #3c8dbc;}
+        .sidebar-menu li.active > .sidebar-submenu {  display: block; }
+        .sidebar-menu a {  color: #b8c7ce;  text-decoration: none; }
+        .sidebar-menu .sidebar-submenu {  display: none;  list-style: none;  padding-left: 10px;  margin: 0 1px;  background: #2c3b41; }
+        .sidebar-menu .sidebar-submenu .sidebar-submenu {  padding-left: 20px; }
+        .sidebar-menu .sidebar-submenu > li > a {  padding: 5px 5px 5px 15px;  display: block;  font-size: 14px;  color: #8aa4af; }
+        .sidebar-menu .sidebar-submenu > li.active > a, .sidebar-menu .sidebar-submenu > li > a:hover {  color: #fff; }
+        /*left-sidebaR*/
+    </style>
+</head>
+<body>
+<div class="container">
+	<div class="row">
+		<div class="span12">
+
+			</div>
+		</div>
+	</div>
+</div>
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span12">
+			<ul class="nav nav-tabs">
+				<li>
+					<div>
+						<img id="top-logo" src="../static/images/logo.png">
+						<span id="logo-text-en">PRD &nbsp;Tech</span>
+					</div>
+				</li>
+
+				<ul class="pagination pagination-sm pagination-centered">
+					<li class="active">
+						<a>系统</a>
+					</li>
+					<li>
+						<a>基础数据</a>
+					</li>
+					<li>
+						<a>产品配置管理</a>
+					</li>
+					<li>
+						<a href="#">PRP项目计划管理</a>
+					</li>
+					<li>
+						<a href="#">MRP计划管理</a>
+					</li>
+					<li>
+						<a href="#">行政管理</a>
+					</li>
+					<li>
+						<a href="#">生产管理</a>
+					</li>
+					<li>
+						<a href="#">销售管理</a>
+					</li>
+					<li>
+						<a href="#">采购管理</a>
+					</li>
+					<li>
+						<a href="#">库房管理</a>
+					</li>
+					<li>
+						<a href="#">财务管理</a>
+					</li>
+					<li>
+						<a href="#">窗口</a>
+					</li>
+					<li>
+						<a href="#">帮助</a>
+					</li>
+				</ul>
+
+				<li class="dropdown pull-right">
+					<a href="#" data-toggle="dropdown" class="dropdown-toggle">个人设置<strong class="caret"></strong></a>
+					<ul class="dropdown-menu">
+						<li>
+							<a href="#">修改信息</a>
+						</li>
+						<li>
+							<a href="update_pwd.html">修改密码</a>
+						</li>
+						<li class="divider">
+						</li>
+						<li>
+							<a onclick="deleteCookies()">退出登录</a>
+						</li>
+					</ul>
+				</li>
+			</ul>
+
+			<div class="row-fluid"  style="background-color:#222d32;">
+				<div  class="col-md-2 column" id="left-sidebar" role="navigation">
+					<ul class="sidebar-menu">
+						<make_sidebar_menu>
+							<!-- 动态添加左边二级菜单 -->
+						</make_sidebar_menu>
+					</ul>
+
+				</div>
+
+				<div  class="col-md-10 column">
+					<div >
+						<iframe src="login.html" width="100%"  height="600px"></iframe>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+</body>
+
+<script src="../static/js/jquery-3.2.1.min.js"></script>
+<script src="../static/bootstrap/js/bootstrap.min.js"></script>
+<script src="../static/js/sidebarMenu.js"></script>
+<script>
+
+
+    makeSidebarMenu();
+    function makeSidebarMenu(){
+
+
+
+    	var $two_li_1=$('<li>' +
+			'<a href="#"><span>仓库管理</span>' +
+			'<span class="glyphicon glyphicon-menu-down pull-right" aria-hidden="true"></span></a>' +
+			'<ul class="sidebar-submenu">' +
+			'<li><a href="#"><span>采购单生成</span></a></li>' +
+			'<li><a href="#"><span>销售单生成</span></a></li>' +
+			'<li><a href="#"><span>物料添加</span></a></li>' +
+			'<li><a href="#"><span>物料删除</span></a></li>' +
+			'<li><a href="#"><span>物料修改</span></a></li>' +
+			'</ul></li>');
+
+        var $two_li_2=$('<li>' +
+            '<a href="#"><span>仓库管理</span>' +
+            '<span class="glyphicon glyphicon-menu-down pull-right" aria-hidden="true"></span></a>' +
+            '<ul class="sidebar-submenu">' +
+            '<li><a href="#"><span>采购单生成</span></a></li>' +
+            '<li><a href="#"><span>销售单生成</span></a></li>' +
+            '<li><a href="#"><span>物料添加</span></a></li>' +
+            '<li><a href="#"><span>物料删除</span></a></li>' +
+            '<li><a href="#"><span>物料修改</span></a></li>' +
+            '</ul></li>');
+
+        $("make_sidebar_menu").append($two_li_1);
+        $("make_sidebar_menu").append($two_li_2);
+
+    }
+
+    $.sidebarMenu($('.sidebar-menu'));
+
+</script>
+
+</html>

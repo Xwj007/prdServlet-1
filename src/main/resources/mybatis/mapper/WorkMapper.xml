@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.lvxz.mapper.WorkMapper">
+
+    <!--Tiitm001类集合 -->
+    <resultMap type="com.lvxz.entity.Tiitm001" id="Tiitm001Result">
+        <result column="item" jdbcType="VARCHAR" property="item"/>
+        <result column="dsca" jdbcType="VARCHAR" property="dsca"/>
+        <result column="citg" jdbcType="VARCHAR" property="citg"/>
+        <result column="kitm" jdbcType="VARCHAR" property="kitm"/>
+        <result column="cpha" jdbcType="VARCHAR" property="cpha"/>
+        <result column="cuni" jdbcType="VARCHAR" property="cuni"/>
+        <result column="ctyp" jdbcType="VARCHAR" property="ctyp"/>
+        <result column="fdxs" jdbcType="VARCHAR" property="fdxs"/>
+        <result column="cate" jdbcType="VARCHAR" property="cate"/>
+        <result column="ifspec" jdbcType="VARCHAR" property="ifspec"/>
+        <result column="copr" jdbcType="INTEGER" property="copr"/>
+
+        <result column="plan" jdbcType="VARCHAR" property="plan"/>
+        <result column="dyym" jdbcType="VARCHAR" property="dyym"/>
+        <result column="bgym" jdbcType="VARCHAR" property="bgym"/>
+        <result column="att1" jdbcType="VARCHAR" property="att1"/>
+
+        <result column="ccc" jdbcType="INTEGER" property="ccc"/>
+        <result column="cck" jdbcType="INTEGER" property="cck"/>
+        <result column="ccg" jdbcType="INTEGER" property="ccg"/>
+        <result column="ccgg" jdbcType="VARCHAR" property="ccgg"/>
+        <result column="prcdhid" jdbcType="VARCHAR" property="prcdhid"/>
+    </resultMap>
+
+    <select id="findTiitm001ByItemID"  parameterType="String" resultMap="Tiitm001Result">
+        SELECT * FROM tiitm001 WHERE item = #{item}
+    </select>
+
+    <!--Tiitm001DTO类集合 -->
+    <resultMap type="com.lvxz.DTO.Tiitm001DTO" id="Tiitm001DTOResult">
+        <result column="item" jdbcType="VARCHAR" property="item"/>
+        <result column="dsca" jdbcType="VARCHAR" property="dsca"/>
+    </resultMap>
+
+    <select id="findAllTiitm001" resultMap="Tiitm001DTOResult">
+        SELECT * FROM tiitm001
+    </select>
+
+
+
+
+    <!--Tdsal001类集合 -->
+    <resultMap type="com.lvxz.entity.Tdsal001" id="Tdsal001Result">
+        <result column="ddh" jdbcType="INTEGER" property="ddh"/>
+        <result column="stat" jdbcType="VARCHAR" property="stat"/>
+        <result column="ddname" jdbcType="VARCHAR" property="ddname"/>
+
+        <result column="cuno" jdbcType="VARCHAR" property="cuno"/>
+        <result column="jhdt" jdbcType="DATE" property="jhdt"/>
+        <result column="jfdt" jdbcType="DATE" property="jfdt"/>
+        <result column="createby" jdbcType="VARCHAR" property="createby"/>
+        <result column="createdate" jdbcType="DATE" property="createdate"/>
+    </resultMap>
+
+    <select id="findTdsal001ByDDH"  parameterType="long" resultMap="Tdsal001Result">
+        SELECT * FROM tdsal001 WHERE ddh = #{ddh}
+    </select>
+
+
+    <!--Tdsal001DTO类集合 -->
+    <resultMap type="com.lvxz.DTO.Tdsal001DTO" id="Tdsal001DTOResult">
+        <result column="ddh" jdbcType="INTEGER" property="ddh"/>
+        <result column="stat" jdbcType="VARCHAR" property="stat"/>
+        <result column="ddname" jdbcType="VARCHAR" property="ddname"/>
+    </resultMap>
+
+    <select id="findAllTdsal001" resultMap="Tdsal001DTOResult">
+        SELECT * FROM tdsal001
+    </select>
+
+
+
+
+</mapper>

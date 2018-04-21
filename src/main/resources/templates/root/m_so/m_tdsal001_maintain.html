@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://lvxz.github.io/bootstrap/css/bootstrap.min.css">
+
+    <title>维护销售订单</title>
+    <style>
+        #tb_ddh,#tb_stat,#tb_is,#tb_cuno,#tb_createby,#tb_createdate
+        {
+            height: 20px;
+            border:none;
+            background-color: #ede7f6;
+        }
+        body{background: #e7e7e7}
+        table{background: white}
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+
+            <nav class="navbar navbar-default" role="navigation">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button> <a class="navbar-brand" style="color: #0f0f0f;font-weight: bold;">维护销售订单</a>
+                </div>
+
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+                    <div class="navbar-form navbar-left" role="search">
+                        <div class="form-group">
+                            <input class="form-control" id="item_id" style="width: 180px" type="text" placeholder="物料编码"/>
+                        </div>
+                        <button class="btn btn" onclick="searchItem()">查询</button>
+                        <button type="reset" class="btn btn-default">重置</button>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="row clearfix">
+                <div class="col-md-4 column">
+                    <div class="row pre-scrollable" id="scroll" style="max-height: 460px">
+                        <aaa>
+
+                        </aaa>
+                    </div>
+
+                </div>
+                <div class="col-md-8 column">
+                    <table class="table table-bordered table-condensed">
+                        <tbody>
+                        <tr>
+                            <td class="info">销售订单</td><td><input type="text" class="form-control" id="tb_ddh" value="------"  /></td>
+                            <td >状态</td><td><input type="text" class="form-control" id="tb_stat" value="------" readonly="readonly" ></td>
+                        </tr>
+                        <tr>
+                            <td >订单名称</td><td><input type="text" class="form-control" id="tb_ddname" value="------"/></td>
+                        </tr>
+                        <tr>
+                            <td >客户</td><td><input type="text" class="form-control" id="tb_cuno" value="------"></td>
+                        </tr>
+                        <tr>
+                            <td>计划交付日期</td><td><input type="text" class="form-control" id="tb_jhdt" value="------" readonly="readonly" /></td>
+                            <td>实际交付日期</td><td><input type="text" class="form-control" id="tb_jfdt" value="------" readonly="readonly" /></td>
+
+                        </tr>
+                        <tr>
+                            <td >创建人</td><td><input type="text" class="form-control" id="tb_createby" value="------" readonly="readonly" /></td>
+                            <td >创建日期</td><td><input type="text" class="form-control" id="tb_createdate" value="------ "readonly="readonly" /></td>
+                        </tr>
+
+                        <tr> </tr>
+
+                        </tbody>
+
+
+                    </table>
+
+                    <div class="btn-group pull-right">
+                        <button class="btn btn-default" type="button">增加</button>
+                        <button class="btn btn-default" type="button">删除</button>
+                        <button class="btn btn-default" type="button">复制</button>
+                        <button class="btn btn-default" type="button">确定</button>
+                        <button class="btn btn-default" type="button">取消</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+<script src="https://lvxz.github.io/bootstrap/jquery-3.2.1.min.js"></script>
+<script src="https://lvxz.github.io/bootstrap/js/bootstrap.min.js"></script>
+<script src="https://lvxz.github.io/js/js.cookie.js"></script>
+<script>
+    changeSize();
+    function changeSize() {
+        var wheight=$(window).height()-140;
+        var count= $("table").length;
+        console.log(count);
+        $("table").height(wheight/count);
+        $(".col-md-8").height(wheight);
+        $(".col-md-4").height(wheight);
+        console.log(wheight);
+    }
+
+    function test(obj) {
+        $(".success").removeClass("success");
+        $(obj).addClass("success");
+        get_m_whxsdd_one($(obj).attr('id'));
+    }
+
+    get_m_whxsdd();
+    <!--获取存储物料列表-->
+    function get_m_whxsdd() {
+
+        var objJson = {
+        };
+        $.post("http://127.0.0.1:8080/m_whxsdd_all",
+            JSON.stringify(objJson),
+            function(data) {
+                if(data.code==2){
+                    console.log(data);
+                    make_m_whxsdd(data.data);
+                }else {
+                    alert(data.msg);
+                }
+            },
+            "JSON"
+        )
+    }
+
+    <!--生成存储物料列表-->
+    function make_m_whxsdd(data) {
+
+        var $table = $('<table class="table table-bordered table-condensed"></table>');
+        $("aaa").append($table);
+
+        var $thead = $('<thead>' +
+            '<tr class="warning">' +
+            '<th>编号</th><th>销售订单</th><th>状态</th>' +
+            '</tr></thead>');
+        $($table).append($thead);
+
+        var $tbody = $('<tbody></tbody>');
+        $($table).append($tbody);
+
+        for(var i=0 ;i<data.length;i++){
+            if(i==0){
+                var $tr = $('<tr onclick="test(this)" class="success" id="'+data[i].ddh+'"></tr>');
+            }else{
+                var $tr = $('<tr onclick="test(this)" id="'+data[i].ddh+'"></tr>');
+            }
+
+            var $td1 = $('<td>'+ (i+1) +'</td>');
+            var $td2 = $('<td>'+ data[i].ddh +'</td>');
+            var $td3 = $('<td>'+ data[i].stat+'</td>');
+
+            $tr.append($td1);
+            $tr.append($td2);
+            $tr.append($td3);
+            $tbody.append($tr);
+        }
+
+        get_m_whxsdd_one(data[0].ddh.toString());
+        console.log(data[0].ddh);
+
+    }
+
+
+    <!--获取存储物料具体信息-->
+    function get_m_whxsdd_one(ddh) {
+        var objJson = {
+            "ddh":ddh
+        };
+        $.post("http://127.0.0.1:8080/m_whxsdd_one",
+            JSON.stringify(objJson),
+            function(data) {
+                if(data.code==22){
+                    console.log(data);
+                    make_m_whxsdd_one(data.data);
+                }else {
+                    alert(data.msg);
+                }
+            },
+            "JSON"
+        )
+    }
+
+    function make_m_whxsdd_one(data) {
+        $('#tb_ddh').val(data.ddh);
+        $('#tb_stat').val(data.stat);
+        $('#tb_ddname').val(data.ddname);
+        $('#tb_cuno').val(data.cuno);
+        $('#tb_jhdt').val(data.jhdt);
+        $('#tb_jfdt').val(data.jfdt);
+        $('#tb_createby').val(data.fdxs);
+        $('#tb_createdate').val(data.createdate);
+
+    }
+
+    function searchItem() {
+        var Ddh = $('#tb_ddh').val();
+        $(".success").removeClass("success");
+        $('#'+Ddh).addClass("success");//更换锁定
+        get_m_whxsdd_one(Ddh);
+    }
+
+</script>
+</html>

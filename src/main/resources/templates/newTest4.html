@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>小写输出</title>
+</head>
+<body>
+<form style="text-align: center;">
+    <br><br><br><br>
+    <input type="text" id="text1" name="text1"/>
+    <br>
+    <input type="text" id="text2" name="text2" readonly="readonly"/>
+    <br><br>
+    <input type="button" value="小写" onclick="way1()" />
+    <input type="reset" value="重置"/>
+</form>
+
+
+
+</body>
+
+<script type="text/javascript">
+    function way1(){
+        var str = document.getElementById('text1').value;
+        document.getElementById('text2').value = str.toLowerCase();
+    }
+
+</script>
+</html>

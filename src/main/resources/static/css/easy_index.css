@@ -1,0 +1,24 @@
+#top-logo{width:45px;height:45px;}
+#logo-text-en{
+    font-size: 7px;
+    vertical-align: text-top;/*垂直居中*/
+    text-align: center;/*水平居中*/
+    /*color: #ffffff;*/
+}
+#user_name,#user_id{
+    width: 70px;/*宽度*/
+    text-align: center;/*水平居中*/
+    border: none;/*划线*/
+    font-size: 15px;/*字体大小*/
+    color: #0f0f0f;/*颜色*/
+    font-weight: bold;/*加粗*/
+    vertical-align:middle;
+}
+#logo-title{
+    color: #ffffff;
+    vertical-align: text-top;/*垂直居中*/
+}
+#id, #account{text-indent:10px;}
+.input-group{padding:16px;margin-left:auto;margin-right:auto;}
+.input-group button{width:100px;}
+#login-alert{display:none;}

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css">
+    <link rel="shortcut icon" href="../static/images/favicon-32.ico" type="image/x-icon"/>
+    <link rel="stylesheet" href="../static/css/login.css">
+    <link rel="stylesheet" href="../static/css/icon.css">
+
+    <title>登录界面</title>
+
+</head>
+<body onload="createCode()" style="background-color:#3e2723;">
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="login-box">
+                <div><img id="top-logo" src="../static/images/logo.png"></div>
+                <div id="logo-text"><span id="logo-text-en">PRD &nbsp;Tech</span><br><span id="logo-text-cn">&nbsp;普瑞迪科技</span></div>
+            <div class="login-box-body">
+                <div class="login-title"><h3>用户登录</h3></div>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="iconfont_2">&#xe611;</i></span>
+                    <input id="id" type="text" class="form-control" v-model="id" placeholder="ID">
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                    <input id="password" type="password" class="form-control" v-model="password" placeholder="密码">
+                </div>
+
+
+                <div class="input-group">
+                    <table border="0" cellspacing="5" cellpadding="5" >
+                        <tr>
+                            <td> <div class="code" id="checkCode" onclick="createCode()" ></div></td>
+                            <td><input  style=" float:right; width: 100px ; height:30px;border: 0.5px solid #b0bec5; -webkit-border-radius: 4px;-moz-border-radius: 4px;border-radius: 4px; text-align: center"  type="text"   id="inputCode" placeholder="请输入验证码"/></td>
+                            <td> <a  href="#" onclick="createCode()">看不清换一张</a></td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="input-group">
+                    <label class="radio-inline">
+                        <input type="radio" name="radio" id="radio1" value="student" checked> 学生
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="radio" id="radio2"  value="teacher"> 老师
+                    </label>
+                </div>
+                <div class="input-group"><button id="login-button" onclick="userLogin();" type="submit" class="btn btn-primary">登陆</button></div>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="login-alert" class="alert alert-info alert-dismissible fade in" role=alert>
+    <button  type="button" class="close" data-dismiss="alert" aria-label="Close" >
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <span>alert content</span>
+</div>
+
+
+<script src="../static/js/jquery-3.2.1.min.js"></script>
+<script src="../static/js/js.cookie.js"></script>
+<script src="../static/js/vue.js"></script>
+<script src="../static/bootstrap/js/bootstrap.min.js"></script>
+<script src="./constant.js"></script>
+<script>
+    $(document).ready(function(){
+        $("#id").keydown(function(event){
+            if(event.which === 13)
+                $("#password")[0].focus();
+        });
+        $("#password").keydown(function(event){
+            if(event.which === 13)
+                $("#login-button").click(userLogin());
+        });
+
+    });
+
+        function userLogin() {
+
+
+            var inputCode = document.getElementById("inputCode").value;
+            if (inputCode.length <= 0)
+            {
+                alert("请输入验证码！");
+            } else if (inputCode.toUpperCase() == code.toUpperCase()) {
+
+                var Id, Password, Radio;
+
+                Id = $('#id').val();
+                Password = $('#password').val();
+                Radio = $('input[name="radio"]:checked').val();
+
+                var objJson = {
+                    "id":Id,
+                    "password":Password,
+                    "radio":Radio
+                };
+                if(Id!=null && Id!=""  && Password!=null && Password!="" ){
+
+                    //validateCode();
+                    $.post("http://"+ getLocalIP() +":8080/login",
+                        JSON.stringify(objJson),
+                        function(data) {
+                            if(data.code == 0){
+
+
+                                if(Radio == "student"){
+                                    Cookies.set('s_id', Id,{ expires: 7, path: '' });
+                                    Cookies.set('s_account', data.data.account, { expires: 7, path: '' });
+                                    alert(Cookies.get('s_account'));
+                                    window.open("index_student.html", "_self");
+                                }else{
+                                    Cookies.set('t_id', Id,{ expires: 7, path: '' });
+                                    Cookies.set('t_account', data.data.account, { expires: 7, path: '' });
+                                    alert(Cookies.get('t_account'));
+                                    window.open("index_teacher.html", "_self");
+                                }
+                            }
+                            else
+                                alert(data.msg);
+                        },
+                        "JSON"
+                    )
+                }else{
+                    alert("关键输入为空！");
+                }
+
+            } else {
+
+                alert("验证码输入有误！");
+                createCode();
+            }
+
+
+        }
+
+    //生成验证码
+    var code;
+    function createCode() {
+        code = "";
+        var codeLength = 4; //验证码的长度
+        var checkCode = document.getElementById("checkCode");
+        var codeChars = new Array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
+            'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',
+            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'); //所有候选组成验证码的字符，当然也可以用中文的
+        for (var i = 0; i < codeLength; i++) {
+            var charNum = Math.floor(Math.random() * 52);
+            code += codeChars[charNum];
+        }
+        if (checkCode) {
+            checkCode.className = "code";
+            checkCode.innerHTML = code;
+        }
+    }
+
+
+</script>
+
+</body>
+</html>

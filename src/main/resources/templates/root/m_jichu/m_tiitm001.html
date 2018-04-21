@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://lvxz.github.io/bootstrap/css/bootstrap.min.css">
+
+    <title>物料数据维护</title>
+    <style>
+        #tb_item,#tb_dsca,#tb_citg,#tb_kitm,#tb_ctyp,#tb_fdxs,#tb_ccc,#tb_cck,#tb_ccg,#tb_ccgg,#tb_cpha,#tb_cuni{
+            height: 20px;
+            border:none;
+            background-color: #ede7f6;
+        }
+        /*#scroll{overflow-y:scroll;height:600px;}*/
+        /*.info{height: auto}*/
+        /*.form-control{height: 30px}*/
+
+    </style>
+</head>
+<body >
+
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+
+            <nav class="navbar navbar-default" role="navigation">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button> <a class="navbar-brand" style="color: #0f0f0f;font-weight: bold;">物料数据维护</a>
+                </div>
+
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+                    <div class="navbar-form navbar-left" role="search">
+                        <div class="form-group">
+                            <input class="form-control" id="item_id" style="width: 180px" type="text" placeholder="物料编码"/>
+                        </div>
+                        <button class="btn btn" onclick="searchItem()">查询</button>
+                        <button type="reset" class="btn btn-default">重置</button>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="row clearfix">
+                <div class="col-md-4 column" >
+                    <div class="row pre-scrollable "id="scroll" style="max-height: 460px">
+                            <aaa>
+
+                            </aaa>
+                    </div>
+
+                </div>
+                <div class="col-md-8 column"  style="text-align: center">
+                    <table class="table table-bordered table-condensed">
+                        <tbody>
+                        <tr >
+                            <td class="info">物料编码</td><td><input type="text" class="form-control" id="tb_item" value="------"/></td>
+                        </tr>
+                        <tr>
+                            <td>物料名称</td><td><input type="text" class="form-control" id="tb_dsca" value="------"/></td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <table class="table table-bordered table-condensed" >
+                        <tbody>
+
+                        <tr>
+                            <td>物料组别</td><td><input type="text" class="form-control" id="tb_citg" value="------"/></td>
+                            <td>物料类型</td><td><input type="text" class="form-control" id="tb_kitm" value="------"/></td>
+                        </tr>
+                        <tr>
+                            <td>虚拟件</td><td><input type="text" class="form-control" id="tb_cpha" value="------"/></td>
+                            <td>计量单位</td><td><input type="text" class="form-control" id="tb_cuni" value="------"/></td>
+                        </tr>
+                        <tr>
+                            <td>产品类型</td><td><input type="text" class="form-control" id="tb_ctyp" value="------"/></td>
+                            <td>放大系数</td><td><input type="text" class="form-control" id="tb_fdxs" value="------"/></td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+
+                    <table class="table table-bordered table-condensed">
+                        <tbody>
+                        <tr class="info">
+                            <td>尺寸规格</td>
+                        </tr>
+                        <tr>
+                            <td>长</td><td><input type="text" class="form-control" id="tb_ccc" value="------"/></td>
+                            <td>宽</td><td><input type="text" class="form-control" id="tb_cck" value="------"/></td>
+                            <td>高</td><td><input type="text" class="form-control" id="tb_ccg" value="------"/></td>
+                        </tr>
+
+                        <tr>
+                            <td>说明</td><td><input type="text" class="form-control" id="tb_ccgg" value="------"/></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="btn-group pull-right">
+                        <button class="btn btn-default" type="button">增加</button>
+                        <button class="btn btn-default" type="button">删除</button>
+                        <button class="btn btn-default" type="button">复制</button>
+                        <button class="btn btn-default" type="button">确定</button>
+                        <button class="btn btn-default" type="button">取消</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+<script src="https://lvxz.github.io/bootstrap/jquery-3.2.1.min.js"></script>
+<script src="https://lvxz.github.io/bootstrap/js/bootstrap.min.js"></script>
+<script src="https://lvxz.github.io/js/js.cookie.js"></script>
+<script>
+    changeSize();
+    function changeSize() {
+        var wheight=$(window).height()-190;
+        var count= $("table").length;
+        console.log(count);
+        $("table").height(wheight/count);
+        $(".col-md-8").height(wheight);
+        $(".col-md-4").height(wheight);
+        console.log(wheight);
+    }
+
+    function test(obj) {
+        $(".success").removeClass("success");
+        $(obj).addClass("success");
+        get_m_tiitm001_one($(obj).attr('id'));
+    }
+
+    get_m_tiitm001();
+    <!--获取存储物料列表-->
+    function get_m_tiitm001() {
+
+        var objJson = {
+        };
+            $.post("http://127.0.0.1:8080/m_tiitm001_all",
+                JSON.stringify(objJson),
+                function(data) {
+                    if(data.code==1){
+                        console.log(data);
+                        make_m_tiitm001(data.data);
+                    }else {
+                        alert(data.msg);
+                    }
+                },
+                "JSON"
+            )
+    }
+
+    <!--生成存储物料列表-->
+    function make_m_tiitm001(data) {
+
+        var $table = $('<table class="table table-bordered table-condensed" style="height: 600px; " ;"></table>');
+        $("aaa").append($table);
+
+        var $thead = $('<thead>' +
+            '<tr class="warning">' +
+            '<th>编号</th><th>物料编码</th><th>物料名称</th>' +
+            '</tr></thead>');
+        $($table).append($thead);
+
+        var $tbody = $('<tbody></tbody>');
+        $($table).append($tbody);
+
+        for(var i=0 ;i<data.length;i++){
+            if(i==0){
+                var $tr = $('<tr onclick="test(this)" class="success" id="'+data[i].item+'"></tr>');
+            }else{
+                var $tr = $('<tr onclick="test(this)" id="'+data[i].item+'"></tr>');
+            }
+
+            var $td1 = $('<td>'+ (i+1) +'</td>');
+            var $td2 = $('<td>'+ data[i].item +'</td>');
+            var $td3 = $('<td>'+ data[i].dsca +'</td>');
+
+            $tr.append($td1);
+            $tr.append($td2);
+            $tr.append($td3);
+            $tbody.append($tr);
+        }
+
+        get_m_tiitm001_one(data[0].item);
+
+    }
+
+
+    <!--获取存储物料具体信息-->
+    function get_m_tiitm001_one(itemId) {
+
+        var objJson = {
+            "itemId":itemId
+        };
+
+        $.post("http://127.0.0.1:8080/m_tiitm001_one",
+            JSON.stringify(objJson),
+            function(data) {
+                if(data.code==11){
+                    console.log(data);
+                    make_m_tiitm001_one(data.data);
+                }else {
+                    alert(data.msg);
+                }
+            },
+            "JSON"
+        )
+    }
+
+    function make_m_tiitm001_one(data) {
+        $('#tb_item').val(data.item);
+        $('#tb_dsca').val(data.dsca);
+        $('#tb_citg').val(data.citg);
+        $('#tb_kitm').val(data.kitm);
+        $('#tb_ctyp').val(data.ctyp);
+        $('#tb_fdxs').val(data.fdxs);
+        $('#tb_ccc').val(data.ccc);
+        $('#tb_cck').val(data.cck);
+        $('#tb_ccg').val(data.ccg);
+        $('#tb_ccgg').val(data.ccgg);
+        $('#tb_cpha').val(data.cpha);
+        $('#tb_cuni').val(data.cuni);
+    }
+    
+    function searchItem() {
+
+        var ItemId = $('#item_id').val();
+        $(".success").removeClass("success");
+        $('#'+ItemId).addClass("success");//更换锁定
+        get_m_tiitm001_one(ItemId);
+    }
+
+</script>
+</html>

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/css/icon.css">
+    <link rel="stylesheet" href="../static/css/easy_index.css">
+    <link rel="shortcut icon" href="../static/images/favicon-32.ico" type="image/x-icon"/>
+    <title></title>
+    <style>
+        #top-logo{float:left;}
+        .brand-logo{min-width:600px;}
+        #logo-text{margin:0.5ex 0 0 40px;color:rgb(50,150,230);float:left;}
+        .log-field{padding-left:4em;padding-right:4em;}
+        .logout{display:none;}
+        /*Left-sidebar*/
+        #left-sidebar{padding:0;max-width:260px; height:inherit; background: #e7e7e7}
+        #left-sidebar a {height:auto;font-size: 13px;padding: 5px; line-height: 30px;}
+        #left-sidebar .glyphicon-menu-down,#left-sidebar glyphicon-menu-up{font-size:10px;margin:4px 5px 0 0;}
+        .sidebar-menu{list-style: none;  margin: 0px;  padding: 0px;background-color: #e3e3e3;}
+        .sidebar-menu > li {position: relative;margin:10px;padding:0;}
+        .sidebar-menu > li > a{padding:12px 5px 12px 15px;display:block;border-left:3px solid transparent;color:gray;}
+        .sidebar-menu > li:hover > a, .sidebar-menu > li.active > a,.sidebar-menu{color:#fff;background: #e7e7e7;border-left-color: #e7e7e7}
+        .sidebar-menu li.active > .sidebar-submenu {  display: block; }
+
+        .sidebar-menu a {  color: #8c8c8c;  text-decoration: none ;}
+        .sidebar-menu .sidebar-submenu {  display: none;  list-style: none;  padding-left: 10px;  margin: 0 1px;  background: gainsboro }
+        .sidebar-menu .sidebar-submenu .sidebar-submenu {  padding-left: 20px; }
+        .sidebar-menu .sidebar-submenu > li > a {  padding: 5px 5px 5px 15px;  display: block;  font-size: 14px;  color: #8c8c8c; }
+        .sidebar-menu .sidebar-submenu > li.active > a, .sidebar-menu .sidebar-submenu > li > a:hover {  color: #5e5e5e; }
+
+        /*left-sidebaR*/
+        body{  background: #e7e7e7;  }
+    </style>
+</head>
+<body>
+
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span12">
+            <ul class="nav nav-pills">
+                <li>
+                    <div>
+                        <img id="top-logo" src="../static/images/logo.png">
+                    </div>
+                </li>
+                <ul class="pagination pagination-sm pagination-centered">
+                    <li class="active" id="first_page">
+                        <a>首页</a>
+                    </li>
+                    <li name="main_menu" id="m_system">
+                        <a>系统</a>
+                    </li>
+                    <li name="main_menu" id="m_jichu">
+                        <a>基础数据</a>
+                    </li>
+                    <li name="main_menu" id="m_productconfig">
+                        <a>产品配置管理</a>
+                    </li>
+                    <li name="main_menu" id="m_mrpplan">
+                        <a>MRP计划管理</a>
+                    </li>
+                    <li name="main_menu" id="m_office">
+                        <a>行政管理</a>
+                    </li>
+                    <li name="main_menu" id="m_shengchan">
+                        <a>生产管理</a>
+                    </li>
+                    <li name="main_menu" id="m_so">
+                        <a>销售管理</a>
+                    </li>
+                    <li name="main_menu" id="m_caigou">
+                        <a>采购管理</a>
+                    </li>
+                    <li name="main_menu" id="m_inv">
+                        <a>库房管理</a>
+                    </li>
+                    <li name="main_menu" id="m_cw">
+                        <a>财务管理</a>
+                    </li>
+                    <li name="main_menu" id="m_saleoppo">
+                        <a>商机管理</a>
+                    </li>
+                    <li>
+                        <a >窗口</a>
+                    </li>
+                    <li>
+                        <a >帮助</a>
+                    </li>
+                </ul>
+
+                <ul class="pagination pull-right">
+                    <li>
+                        <span class="label label-success"><i class="glyphicon glyphicon-user"></i></span>
+                    </li>
+                    <li>
+                        <span class="label label-success">未登录</span>
+                    </li>
+                </ul>
+            </ul>
+            <div class="row-fluid"  style="background-color:#e7e7e7; margin: 10px" >
+                <div  class="col-md-2 column" id="left-sidebar" role="navigation" >
+                    <ul class="sidebar-menu">
+                        <aaaaa>
+                            <!-- 动态添加左边二级菜单 -->
+                        </aaaaa>
+                    </ul>
+                </div>
+
+
+                <div  class="col-md-10 column">
+                    <bbbbb>
+
+                    </bbbbb>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+
+<script src="../static/js/jquery-3.2.1.min.js"></script>
+<script src="../static/bootstrap/js/bootstrap.min.js"></script>
+<script src="../static/js/sidebarMenu.js"></script>
+<script>
+
+//changeSize();
+    function changeSize() {
+        $("body").height($(window).height());
+        console.log($(window).height())
+//        $("#left-sidebar").background();
+    }
+    /*二级菜单点击响应下拉*/
+    $.sidebarMenu($('.sidebar-menu'));
+
+    getSidebarMenuData();
+
+    <!--获取老师布置的作业-->
+    function getSidebarMenuData() {
+      /*  var Account=Cookies.get('s_account');
+        var Id=Cookies.get('s_id');*/
+        okHTML("first_page");
+        var objJson = {
+        };
+
+        $.post("http://127.0.0.1:8080/all_menu_1",
+            JSON.stringify(objJson),
+            function(data) {
+                if(data.code==0){
+                    alert(data.msg);
+                    console.log(data);
+                    //all_data = data.data;
+                    makeSidebarMenu(data.data);
+                }else{
+                    alert("失败");
+                }
+            },
+            "JSON"
+        )
+
+    }
+
+    /*动态生成所有下拉列表*/
+    function makeSidebarMenu(data){
+
+        for(var i=0;i<data.length;i++){
+            if(data[i].child == 0){
+                continue;
+            }
+            for (var j = 0; j < data[i].menuInfoDTOList.length; j++) {
+                var $two_li=$('<li id="'+data[i].menuName+'" name="siderbar_menus"></li>');
+
+                var $two_ul=$('<ul class="sidebar-submenu"></ul>');
+
+                if(data[i].menuInfoDTOList[j].child == 0){
+                    var $two_li_1=$('<a >' +
+                        '<span onclick="findHTML(this)" data-level="2" data-one="'+data[i].menuName+'" data-two="'+data[i].menuInfoDTOList[j].menuName+'" data-order="'+data[i].menuInfoDTOList[j].seq_order+'">'+data[i].menuInfoDTOList[j].menuText+'</span></a>');
+                    $two_li.append($two_li_1);
+                }else{
+
+                    var $two_li_1=$('<a><span>'+data[i].menuInfoDTOList[j].menuText+'</span>' +
+                        '<span class="glyphicon glyphicon-menu-down pull-right" aria-hidden="true"></span></a>');
+
+                    $two_li.append($two_li_1);
+
+                    for(var k = 0; k < data[i].menuInfoDTOList[j].menuInfoDTOList.length; k++) {
+
+                        var $two_li_2=$('<li><a >' +
+                            '<span onclick="findHTML(this)" data-level="3"  data-one="'+data[i].menuName+'" data-two="'+data[i].menuInfoDTOList[j].menuName+'" data-three="'+data[i].menuInfoDTOList[j].menuInfoDTOList[k].menuName+'" data-order="'+data[i].menuInfoDTOList[j].menuInfoDTOList[k].seq_order+'">'+data[i].menuInfoDTOList[j].menuInfoDTOList[k].menuText+'</span></a></li>');
+                        $two_ul.append($two_li_2);
+                    }
+                }
+
+                $two_li.append($two_ul);
+                $("aaaaa").append($two_li);
+            }
+        }
+
+        $('li[name="siderbar_menus"]').hide();//消除之前的
+
+    }
+
+    /*一级菜单点击响应*/
+    $('li[name="main_menu"]').click(function(){
+
+        $('li[name="siderbar_menus"]').hide();//消除之前的
+        var id = $(this).attr("id");
+        $(".active").removeClass("active");
+        $(this).addClass("active");
+        $('li[id="'+id+'"]').show();//显示选择的
+    });
+
+
+    /*成功生成html*/
+    function okHTML(url) {
+        var windowHeight =$(window).height()-88;
+        console.log(windowHeight);
+        $('#div_html').remove();
+        var $div=$('<div id="div_html"></div>');
+        $("bbbbb").append($div);
+
+        var $iframe=$('<iframe src="'+ url + '.html" width="100%" height="'+windowHeight+' +200px" ></iframe>');
+//        $("iframe").height(windowHeight);
+        $div.append($iframe);
+
+    }
+
+    /*所有三级菜单和部分二级菜单  功能点击响应*/
+    /*动态查找对应菜单功能对应的html*/
+    function findHTML(obj) {
+        var level = obj.getAttribute("data-level");//获取菜单级别
+        var url;
+        switch(level){
+            case "2":
+                url = "./root/" + obj.getAttribute("data-one") + "/" +obj.getAttribute("data-two");
+                break;
+            case "3":
+                url = "./root/" + obj.getAttribute("data-one") + "/" +obj.getAttribute("data-two") + "/" + obj.getAttribute("data-three");
+                break;
+        }
+        console.log(url);
+        okHTML(url);
+
+    }
+
+
+
+</script>
+
+</html>
